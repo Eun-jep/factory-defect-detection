@@ -77,3 +77,10 @@
 - git 연결, 모델 파일(.pth)은 .gitignore로 제외하고 코드만 업로드
 - 이슈: nano 붙여넣기 중복으로 파일이 199줄 생성 -> 파일 재생성으로 해결(34줄)
 - 한계: 병 사진이 아닌 입력(흰 이미지)도 불량 0.77로 판정 -> 웹캠 단계에서 주의
+
+- ### 추가 (저녁)
+- MariaDB 프로젝트 전용 DB(factory)와 계정 생성, inspections 테이블 설계
+- db.py 작성: save_result(), get_history(), 접속 정보는 .env로 분리(.gitignore 처리)
+- 판정 → DB 저장 → 조회 흐름 확인 (id 1: 오염 014 정상 0.012, id 2: 큰 파손 004 불량 1.0)
+- 이슈: GitHub 웹 수정 때문에 push가 거절됨 -> git pull 후 해결
+  
