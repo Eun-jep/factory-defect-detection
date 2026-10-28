@@ -32,3 +32,30 @@ def predict(image, threshold=THRESHOLD):
         defect_prob = F.softmax(_model(x), dim=1)[0][0].item()   # 0번 = defect
     label = '불량' if defect_prob >= threshold else '정상'
     return {'label': label, 'defect_prob': round(defect_prob, 4)}
+
+# ---- Grad-CAM: 판정 근거 시각화 (대략적, 위치 검출 아님) ----
+import numpy as np
+import matplotlib
+matplotlib.use('Agg')
+from matplotlib import cm
+
+_feats, _grads = {}, {}
+_model.layer4.register_forward_hook(lambda m, i, o: _feats.__setitem__('v', o))
+_model.layer4.register_full_backward_hook(lambda m, gi, go: _grads.__setitem__('v', go[0]))
+
+def gradcam_overlay(image, alpha=0.45):
+    """PIL 이미지 -> 히트맵을 겹친 PIL 이미지 ('불량' 근거 기준)"""
+    img = image.convert('RGB')
+    x = _tf(img).unsqueeze(0).to(device)
+    _model.zero_grad()
+    with torch.enable_grad():
+        out = _model(x)
+        out[0, 0].backward()
+    w = _grads['v'].mean(dim=(2, 3), keepdim=True)
+    cam_map = F.relu((w * _feats['v']).sum(dim=1))[0]
+    cam_map = (cam_map - cam_map.min()) / (cam_map.max() - cam_map.min() + 1e-8)
+    cam_map = F.interpolate(cam_map[None, None], size=img.size[::-1], mode='bilinear')[0, 0]
+    heat = (cm.jet(cam_map.detach().cpu().numpy())[:, :, :3] * 255).astype(np.uint8)
+    base = np.array(img).astype(np.float32)
+    mixed = ((1 - alpha) * base + alpha * heat).astype(np.uint8)
+    return Image.fromarray(mixed)

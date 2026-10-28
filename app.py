@@ -3,7 +3,7 @@ import streamlit as st
 import pandas as pd
 from PIL import Image
 
-from model import predict
+from model import predict, gradcam_overlay
 from db import save_result, get_history
 
 st.set_page_config(page_title="제조 불량 판정 대시보드", layout="wide")
@@ -16,17 +16,26 @@ uploaded = st.file_uploader("병 입구 사진을 올려 주세요", type=["png"
 if uploaded is not None:
     img = Image.open(uploaded)
     result = predict(img)
-    col1, col2 = st.columns(2)
-    with col1:
-        st.image(img, caption=uploaded.name, width="stretch")
-    with col2:
-        if result["label"] == "불량":
-            st.error(f"판정: 불량 (불량확률 {result['defect_prob']:.1%})")
-        else:
-            st.success(f"판정: 정상 (불량확률 {result['defect_prob']:.1%})")
-        if st.button("결과를 DB에 저장"):
-            save_result(uploaded.name, result["label"], result["defect_prob"])
-            st.success("저장했어요")
+
+    if result["label"] == "불량":
+        st.error(f"판정: 불량 (불량확률 {result['defect_prob']:.1%})")
+    else:
+        st.success(f"판정: 정상 (불량확률 {result['defect_prob']:.1%})")
+
+    if result["label"] == "불량":
+        c_a, c_b = st.columns(2)
+        c_a.image(img, caption=uploaded.name, width=380)
+        c_b.image(
+            gradcam_overlay(img),
+            caption="판정 근거 시각화 (Grad-CAM, 대략적 영역이며 정확한 위치 검출이 아님)",
+            width=380,
+        )
+    else:
+        st.image(img, caption=uploaded.name, width=380)
+
+    if st.button("결과를 DB에 저장"):
+        save_result(uploaded.name, result["label"], result["defect_prob"])
+        st.success("저장했어요")
 
 # 2) 요약 숫자
 rows = get_history(limit=1000)
