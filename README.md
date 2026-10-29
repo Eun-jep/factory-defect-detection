@@ -95,7 +95,7 @@
 
 ## 실행 방법
 1. 저장소를 받고 가상환경을 만든 뒤 `pip install -r requirements.txt`
-2. 학습한 모델 `best_model.pth`를 `models/` 폴더에 넣기 (모델 파일은 저장소에 없음)
+2. 학습한 모델 `best_model.pth`(약 43MB)를 `models/` 폴더에 넣기 (용량 문제로 저장소에는 포함하지 않았으며, 요청 시 제공합니다)
 3. MariaDB에 DB(`factory`)와 `inspections` 테이블을 만들고, 프로젝트 폴더에 `.env` 작성 (`DB_HOST`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`)
 4. `streamlit run app.py`
 
