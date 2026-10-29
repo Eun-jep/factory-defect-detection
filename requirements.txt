@@ -1,0 +1,8 @@
+torch
+torchvision
+pillow
+matplotlib
+streamlit
+pandas
+pymysql
+python-dotenv
