@@ -94,7 +94,7 @@
 - 수치는 정렬 고정 분할(재현 가능)로 다시 측정한 값입니다.
 
 ## 실행 방법
-1. 저장소를 받고 가상환경에서 `pip install torch torchvision pillow matplotlib streamlit pandas pymysql python-dotenv`
+1. 저장소를 받고 가상환경을 만든 뒤 `pip install -r requirements.txt`
 2. 학습한 모델 `best_model.pth`를 `models/` 폴더에 넣기 (모델 파일은 저장소에 없음)
 3. MariaDB에 DB(`factory`)와 `inspections` 테이블을 만들고, 프로젝트 폴더에 `.env` 작성 (`DB_HOST`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`)
 4. `streamlit run app.py`
