@@ -91,6 +91,7 @@
 - 임계값 탐색과 모델 비교 때 테스트셋 결과를 확인했습니다.
 - 카메라 재촬영은 2장 시험입니다.
 - 오염 014의 불량확률이 Colab(약 0.071)과 대시보드(0.012)에서 다르게 나왔고, 원인은 확정하지 못했습니다. 판정은 두 환경 모두 정상입니다.
+- 수치는 정렬 고정 분할(재현 가능)로 다시 측정한 값입니다.
 
 ## 실행 방법
 1. 저장소를 받고 가상환경에서 `pip install torch torchvision pillow matplotlib streamlit pandas pymysql python-dotenv`
