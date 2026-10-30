@@ -100,8 +100,31 @@
 ## 실행 방법
 1. 저장소를 받고 가상환경을 만든 뒤 `pip install -r requirements.txt`
 2. 학습한 모델 `best_model.pth`(약 43MB)를 `models/` 폴더에 넣기 (용량 문제로 저장소에는 포함하지 않았으며, 요청 시 제공합니다)
-3. MariaDB에 DB(`factory`)와 `inspections` 테이블을 만들고, 프로젝트 폴더에 `.env` 작성 (`DB_HOST`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`)
-4. `streamlit run app.py`
+3. MariaDB에 DB와 테이블 만들기
+
+```sql
+CREATE DATABASE factory CHARACTER SET utf8mb4;
+USE factory;
+CREATE TABLE inspections (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    inspected_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    machine_id INT NOT NULL DEFAULT 1,
+    image_name VARCHAR(255) NOT NULL,
+    label VARCHAR(10) NOT NULL,
+    defect_prob FLOAT NOT NULL
+);
+```
+
+4. 프로젝트 폴더에 `.env` 파일을 만들어 DB 접속 정보 작성 (저장소에는 포함하지 않음)
+
+```
+DB_HOST=localhost
+DB_USER=사용자이름
+DB_PASSWORD=비밀번호
+DB_NAME=factory
+```
+
+5. `streamlit run app.py`
 
 ## 향후 계획
 - TCP 소켓 기반 설비 데이터 수집 서버를 별도 프로젝트로 개발하고, 본 시스템의 판정 결과를 전송하는 구조로 확장
