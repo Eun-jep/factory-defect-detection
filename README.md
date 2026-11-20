@@ -13,6 +13,8 @@
 - 영상 구성: 정상 판정 → 큰 파손 판정(Grad-CAM) → 놓친 오염 사례(정상으로 판정) → 요약·이력
 
 ![대시보드](docs/images/dashboard_final.png)
+![불량 판정 화면](docs/images/dashboard_bad.png)
+![놓친 오염 사례](docs/images/dashboard_missed.png)
 
 ## 시스템 구조
 
