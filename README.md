@@ -9,7 +9,7 @@
 - 한계: 공개 데이터셋 사용, 테스트 불량 10장으로 표본이 작음
 
 ## 시연 영상 / 화면
-- 시연 영상: https://youtu.be/xRXbmAgvRpw
+- 시연 영상: https://youtu.be/SmCtkdnjxBQ
 - 영상 구성: 정상 판정 → 큰 파손 판정(Grad-CAM) → 놓친 오염 사례(정상으로 판정) → 요약·이력
 
 ![대시보드](docs/images/dashboard_final.png)
