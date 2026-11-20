@@ -15,6 +15,7 @@
 ![대시보드](docs/images/dashboard_final.png)
 ![불량 판정 화면](docs/images/dashboard_bad.png)
 ![놓친 오염 사례](docs/images/dashboard_missed.png)
+![검사 이력과 분석 패널](docs/images/dashboard_history.png)
 
 ## 시스템 구조
 
